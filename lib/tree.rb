@@ -1,5 +1,5 @@
 class Tree
-  attr_reader :root
+  attr_accessor :root
 
   def initialize(input)
     @root = build_tree(input)
@@ -32,6 +32,7 @@ class Tree
           end
         end
       end
+      insert(arr.shift)
     end
     build_tree(arr, root_node)
   end
