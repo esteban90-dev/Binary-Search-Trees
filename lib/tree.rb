@@ -13,6 +13,19 @@ class Tree
     end
   end
 
+  def find(value)
+    current_node = root
+    loop do
+      return nil if current_node.nil?
+      return current_node if current_node.data == value
+      if value < current_node.data
+        current_node = current_node.left_child
+      elsif value > current_node.data
+        current_node = current_node.right_child
+      end
+    end
+  end
+
   def insert(value)
     new_node = create_node(value)
     current_node = root
