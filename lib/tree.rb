@@ -1,43 +1,21 @@
 class Tree
   attr_accessor :root
 
-  def initialize(input)
-    @root = build_tree(input)
+  def initialize()
+    @root = nil
   end
 
   public
 
-  def build_tree(arr, root_node=nil)
-    return root_node if arr.empty?
-    arr.uniq! #remove duplicates
-    if root_node.nil? 
-      root_node = create_node(arr.shift)
-    else 
-      current_node = root_node
-      new_node = create_node(arr.shift)
-      loop do 
-        if new_node < current_node
-          if current_node.left_child.nil?
-            current_node.left_child = new_node
-            break
-          else
-            current_node = current_node.left_child
-          end
-        elsif new_node > current_node
-          if current_node.right_child.nil?
-            current_node.right_child = new_node
-            break
-          else
-            current_node = current_node.right_child
-          end
-        end
-      end
-      insert(arr.shift)
-    end
-    build_tree(arr, root_node)
+  def build_tree(arr)
+    arr.uniq!  #remove duplicates
+    return if arr.empty?
+    insert(arr.shift)
+    build_tree(arr)
   end
 
   def insert(value)
+    return if value.nil?
     if root.nil?
       self.root = create_node(value)
     else
