@@ -8,20 +8,18 @@ class Tree
   public
 
   def build_tree(arr)
-    arr.uniq!  #remove duplicates
-    return if arr.empty?
-    insert(arr.shift)
-    build_tree(arr)
+    until arr.empty?
+      insert(arr.shift)
+    end
   end
 
   def insert(value)
-    return if value.nil?
-    if root.nil?
-      self.root = create_node(value)
+    new_node = create_node(value)
+    current_node = root
+    if current_node.nil?
+      self.root = new_node
     else
-      current_node = root
-      new_node = create_node(value)
-      loop do 
+      loop do
         if new_node < current_node
           if current_node.left_child.nil?
             current_node.left_child = new_node
@@ -29,7 +27,8 @@ class Tree
           else
             current_node = current_node.left_child
           end
-        elsif new_node > current_node
+        end
+        if new_node > current_node
           if current_node.right_child.nil?
             current_node.right_child = new_node
             break
