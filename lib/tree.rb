@@ -26,6 +26,23 @@ class Tree
     end
   end
 
+  def level_order
+    return nil if root.nil?
+    queue = []
+    new_arr = []
+    queue.push(root)
+    while queue.length > 0
+      queue.push(queue[0].left_child) if queue[0].left_child
+      queue.push(queue[0].right_child) if queue[0].right_child
+      new_arr << queue.shift
+    end
+    if block_given?
+      new_arr.each{ |node| yield node }
+    else
+      return new_arr
+    end
+  end
+
   def parent(value)
     current_node = root
 
