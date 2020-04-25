@@ -82,8 +82,12 @@ class Tree
     end
 
     #case 3 - node with 2 subtrees: replace node with successor node (min val in right subtree)
-
-
+    if node.num_children == 2
+      successor_node = successor(node.data)
+      temp = successor_node.data
+      delete(successor_node.data)
+      node.data = temp
+    end
   end
 
   def successor(value)
