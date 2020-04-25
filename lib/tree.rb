@@ -53,11 +53,15 @@ class Tree
   def delete(value)
     return nil if root.nil? || find(value).nil?  #return nil if tree is empty or if node doest exist
     node = find(value)
+    parent_node = parent(node.data)
 
-    #case 1 - leaf node: delete.
-
+    #case 1 - node is a leaf node: delete reference from parent.
     if node.left_child.nil? && node.right_child.nil?
-      puts "leaf node!"
+      if node.data < parent_node.data
+        parent_node.left_child = nil
+      elsif node.data > parent_node.data
+        parent_node.right_child = nil
+      end
     end
 
 
