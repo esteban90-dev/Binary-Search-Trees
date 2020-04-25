@@ -56,17 +56,30 @@ class Tree
     parent_node = parent(node.data)
 
     #case 1 - node is a leaf node: delete reference from parent.
-    if node.left_child.nil? && node.right_child.nil?
-      if node.data < parent_node.data
+    if num_children(node.data) == 0
+      if node < parent_node
         parent_node.left_child = nil
-      elsif node.data > parent_node.data
+      elsif node > parent_node
         parent_node.right_child = nil
       end
     end
 
-    #case 2 - node with 1 subtree: replace current node with next node
-
-
+    #case 2 - node with 1 subtree: assign child to parent. 
+    if num_children(node.data) == 1
+      if node.left_child  #subtree < node
+        if node < parent_node
+          parent_node.left_child = node.left_child
+        elsif node > parent_node
+          parent_node.right_child = node.left_child
+        end
+      else  #subtree > node
+        if node < parent_node
+          parent_node.left_child = node.right_child
+        elsif node > parent_node
+          parent_node.right_child = node.right_child
+        end
+      end
+    end
 
     #case 3 - node with 2 subtrees: replace node with successor node (min val in right subtree)
   end
