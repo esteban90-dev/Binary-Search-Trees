@@ -56,7 +56,7 @@ class Tree
     parent_node = parent(node.data)
 
     #case 1 - node is a leaf node: delete reference from parent.
-    if num_children(node.data) == 0
+    if node.num_children == 0
       if node < parent_node
         parent_node.left_child = nil
       elsif node > parent_node
@@ -65,7 +65,7 @@ class Tree
     end
 
     #case 2 - node with 1 subtree: assign child to parent. 
-    if num_children(node.data) == 1
+    if node.num_children == 1
       if node.left_child  #subtree < node
         if node < parent_node
           parent_node.left_child = node.left_child
@@ -82,18 +82,9 @@ class Tree
     end
 
     #case 3 - node with 2 subtrees: replace node with successor node (min val in right subtree)
-  end
 
-  def num_children(value)
-    return nil if find(value).nil?
-    node = find(value)
-    if node.left_child.nil? && node.right_child.nil?
-      return 0
-    elsif (node.left_child && node.right_child.nil?) || (node.left_child.nil? && node.right_child)
-      return 1
-    else
-      return 2
-    end
+
+
   end
 
   def insert(value)

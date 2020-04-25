@@ -16,4 +16,14 @@ class Node
     self.data <=> other.data
   end
 
+  def num_children
+    if left_child.nil? && right_child.nil?
+      return 0
+    elsif (left_child && right_child.nil?) || (left_child.nil? && right_child)
+      return 1
+    else
+      return 2
+    end
+  end
+
 end
