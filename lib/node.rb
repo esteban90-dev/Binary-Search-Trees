@@ -26,4 +26,14 @@ class Node
     end
   end
 
+  def successor
+    return nil if right_child.nil?
+    current_child = right_child
+    loop do
+      break if current_child.left_child.nil?
+      current_child = current_child.left_child
+    end
+    return current_child
+  end
+
 end
