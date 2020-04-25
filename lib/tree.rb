@@ -84,8 +84,18 @@ class Tree
     #case 3 - node with 2 subtrees: replace node with successor node (min val in right subtree)
 
 
-
   end
+
+  def successor(value)
+    return nil if find(value).nil?
+    current_node = find(value).right_child
+    loop do
+      break if current_node.left_child.nil?
+      current_node = current_node.left_child
+    end
+    return current_node
+  end
+
 
   def insert(value)
     new_node = create_node(value)
