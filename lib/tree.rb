@@ -1,17 +1,63 @@
 class Tree
   attr_accessor :root
 
-  def initialize()
-    @root = nil
+  def initialize(input)
+    @root = build_tree(input)
   end
 
   public
 
+
+  def build_tree(arr, root_node=nil)
+    return nil if arr.empty?
+    mid = arr.length / 2
+    left = arr.slice!(0,mid)
+    mid = arr.slice!(0)
+    right = arr
+
+    root_node = create_node(mid)
+    
+    root_node.left_child = build_tree(left, root_node)
+    root_node.right_child = build_tree(right, root_node)
+    return root_node
+  end
+
+=begin
   def build_tree(arr)
     until arr.empty?
       insert(arr.shift)
     end
   end
+=end
+
+=begin
+  def insert(value)
+    new_node = create_node(value)
+    current_node = root
+    if current_node.nil?
+      self.root = new_node
+    else
+      loop do
+        if new_node < current_node
+          if current_node.left_child.nil?
+            current_node.left_child = new_node
+            break
+          else
+            current_node = current_node.left_child
+          end
+        end
+        if new_node > current_node
+          if current_node.right_child.nil?
+            current_node.right_child = new_node
+            break
+          else
+            current_node = current_node.right_child
+          end
+        end
+      end
+    end
+  end
+=end
 
   def balanced?
     return nil if root.nil?
@@ -182,34 +228,6 @@ class Tree
       current_node = current_node.left_child
     end
     return current_node
-  end
-
-
-  def insert(value)
-    new_node = create_node(value)
-    current_node = root
-    if current_node.nil?
-      self.root = new_node
-    else
-      loop do
-        if new_node < current_node
-          if current_node.left_child.nil?
-            current_node.left_child = new_node
-            break
-          else
-            current_node = current_node.left_child
-          end
-        end
-        if new_node > current_node
-          if current_node.right_child.nil?
-            current_node.right_child = new_node
-            break
-          else
-            current_node = current_node.right_child
-          end
-        end
-      end
-    end
   end
 
   private
