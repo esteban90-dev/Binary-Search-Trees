@@ -49,6 +49,10 @@ class Tree
     end
   end
 
+  def rebalance(root_node=root)
+    self.root = build_tree(level_order.sort.uniq)
+  end
+
   def find(value, root_node=root)
     return if root_node.nil?
     if root_node.data == value
@@ -91,7 +95,7 @@ class Tree
     i = 1
     arr= []
     while i <= depth_tree
-      arr << get_level(root, i)
+      get_level(root, i).each{ |value| arr << value }
       i += 1
     end
     if block_given?
