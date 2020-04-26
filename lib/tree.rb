@@ -43,6 +43,7 @@ class Tree
     end
   end
 
+=begin  
   def level_order
     return nil if root.nil?
     queue = []
@@ -59,12 +60,64 @@ class Tree
       return new_arr
     end
   end
+=end
+
+  def get_level(root_node, level, arr=[])
+    return if root_node.nil?
+    if level == 1
+      arr << root_node.data
+    elsif level > 1
+      get_level(root_node.left_child, level - 1, arr)
+      get_level(root_node.right_child, level - 1, arr)
+    end
+    return arr
+  end
+
+  def level_order
+    return if root.nil?
+    depth_tree = depth(root)
+    i = 1
+    arr= []
+    while i <= depth_tree
+      arr << get_level(root, i)
+      i += 1
+    end
+    if block_given?
+      arr.each{ |data| yield data }
+    else
+      return arr
+    end
+  end
 
   def inorder(root_node=nil, arr=[])
     return if root_node.nil?
     inorder(root_node.left_child, arr)
     arr << root_node.data
     inorder(root_node.right_child, arr)
+    if block_given?
+      arr.each{ |data| yield data }
+    else
+      return arr
+    end
+  end
+
+  def preorder(root_node=nil, arr=[])
+    return if root_node.nil?
+    arr << root_node.data
+    preorder(root_node.left_child, arr)
+    preorder(root_node.right_child, arr)
+    if block_given?
+      arr.each{ |data| yield data }
+    else
+      return arr
+    end
+  end
+
+  def postorder(root_node=nil, arr=[])
+    return if root_node.nil?
+    postorder(root_node.left_child, arr)
+    postorder(root_node.right_child, arr)
+    arr << root_node.data
     if block_given?
       arr.each{ |data| yield data }
     else
