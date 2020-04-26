@@ -22,42 +22,23 @@ class Tree
     return root_node
   end
 
-=begin
-  def build_tree(arr)
-    until arr.empty?
-      insert(arr.shift)
-    end
-  end
-=end
-
-=begin
-  def insert(value)
-    new_node = create_node(value)
-    current_node = root
-    if current_node.nil?
-      self.root = new_node
+  def insert(value, root_node=root)
+    return if root_node.nil?
+    if value < root_node.data
+      if root_node.left_child.nil?
+        root_node.left_child = create_node(value)
+      else
+        insert(value, root_node.left_child)
+      end
     else
-      loop do
-        if new_node < current_node
-          if current_node.left_child.nil?
-            current_node.left_child = new_node
-            break
-          else
-            current_node = current_node.left_child
-          end
-        end
-        if new_node > current_node
-          if current_node.right_child.nil?
-            current_node.right_child = new_node
-            break
-          else
-            current_node = current_node.right_child
-          end
-        end
+      if root_node.right_child.nil?
+        root_node.right_child = create_node(value)
+      else
+        insert(value, root_node.right_child)
       end
     end
+    return root_node
   end
-=end
 
   def balanced?
     return nil if root.nil?
@@ -68,7 +49,7 @@ class Tree
     end
   end
 
-  def find(value, root_node=nil)
+  def find(value, root_node=root)
     return if root_node.nil?
     if root_node.data == value
       return root_node
@@ -80,7 +61,7 @@ class Tree
   end
 
 
-  def depth(node)
+  def depth(node=root)
     return 0 if node.nil?
     
     depth_left = 1 + depth(node.left_child)
@@ -120,7 +101,7 @@ class Tree
     end
   end
 
-  def inorder(root_node=nil, arr=[])
+  def inorder(root_node=root, arr=[])
     return if root_node.nil?
     inorder(root_node.left_child, arr)
     arr << root_node.data
@@ -132,7 +113,7 @@ class Tree
     end
   end
 
-  def preorder(root_node=nil, arr=[])
+  def preorder(root_node=root, arr=[])
     return if root_node.nil?
     arr << root_node.data
     preorder(root_node.left_child, arr)
@@ -144,7 +125,7 @@ class Tree
     end
   end
 
-  def postorder(root_node=nil, arr=[])
+  def postorder(root_node=root, arr=[])
     return if root_node.nil?
     postorder(root_node.left_child, arr)
     postorder(root_node.right_child, arr)
