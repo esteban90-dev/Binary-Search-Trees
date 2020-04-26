@@ -13,6 +13,15 @@ class Tree
     end
   end
 
+  def balanced?
+    return nil if root.nil?
+    if ( depth(root.left_child) - depth(root.right_child) ).abs <= 1
+      return true
+    else
+      false
+    end
+  end
+
   def find(value, root_node=nil)
     return if root_node.nil?
     if root_node.data == value
