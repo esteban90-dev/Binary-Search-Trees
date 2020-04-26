@@ -33,7 +33,6 @@ class Tree
   def depth(node)
     return 0 if node.nil?
     
-    #calculate depth of subtrees
     depth_left = 1 + depth(node.left_child)
     depth_right = 1 + depth(node.right_child)
     
@@ -44,8 +43,6 @@ class Tree
     end
   end
 
-
-=begin
   def level_order
     return nil if root.nil?
     queue = []
@@ -62,7 +59,18 @@ class Tree
       return new_arr
     end
   end
-=end
+
+  def inorder(root_node=nil, arr=[])
+    return if root_node.nil?
+    inorder(root_node.left_child, arr)
+    arr << root_node.data
+    inorder(root_node.right_child, arr)
+    if block_given?
+      arr.each{ |data| yield data }
+    else
+      return arr
+    end
+  end
 
   def parent(value)
     current_node = root
