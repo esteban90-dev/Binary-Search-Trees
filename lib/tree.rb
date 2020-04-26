@@ -13,22 +13,17 @@ class Tree
     end
   end
 
-  def find(value)
-    current_node = root
-    loop do
-      return nil if current_node.nil?
-      return current_node if current_node.data == value
-      if value < current_node.data
-        current_node = current_node.left_child
-      elsif value > current_node.data
-        current_node = current_node.right_child
-      end
+  def find(value, root_node=nil)
+    return if root_node.nil?
+    if root_node.data == value
+      return root_node
+    elsif value < root_node.data
+      find(value, root_node.left_child)
+    elsif value > root_node.data
+      find(value, root_node.right_child)
     end
   end
 
-  def level_order(level=1)
-    
-  end
 
   def depth(node)
     return 0 if node.nil?
@@ -42,25 +37,6 @@ class Tree
       return depth_right
     end
   end
-
-=begin  
-  def level_order
-    return nil if root.nil?
-    queue = []
-    new_arr = []
-    queue.push(root)
-    while queue.length > 0
-      queue.push(queue[0].left_child) if queue[0].left_child
-      queue.push(queue[0].right_child) if queue[0].right_child
-      new_arr << queue.shift
-    end
-    if block_given?
-      new_arr.each{ |node| yield node }
-    else
-      return new_arr
-    end
-  end
-=end
 
   def get_level(root_node, level, arr=[])
     return if root_node.nil?
