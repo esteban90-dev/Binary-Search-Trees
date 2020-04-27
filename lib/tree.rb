@@ -52,7 +52,7 @@ class Tree
     end
   end
 
-  def rebalance(root_node=root)
+  def rebalance!(root_node=root)
     self.root = builder(level_order)
   end
 
