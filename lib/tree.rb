@@ -2,11 +2,14 @@ class Tree
   attr_accessor :root
 
   def initialize(input)
-    @root = build_tree(input)
+    @root = builder(input)
   end
 
   public
 
+  def builder(input)
+    build_tree(input.sort.uniq)
+  end
 
   def build_tree(arr, root_node=nil)
     return nil if arr.empty?
@@ -50,7 +53,7 @@ class Tree
   end
 
   def rebalance(root_node=root)
-    self.root = build_tree(level_order.sort.uniq)
+    self.root = builder(level_order)
   end
 
   def find(value, root_node=root)
@@ -143,20 +146,15 @@ class Tree
 
   def parent(value)
     current_node = root
-
     return nil if current_node.data == value
-
     loop do
       return nil if current_node.nil?
-  
       if current_node.left_child
         return current_node if current_node.left_child.data == value
       end
-
       if current_node.right_child
         return current_node if current_node.right_child.data == value
       end
-
       if value < current_node.data
         current_node = current_node.left_child
       elsif value > current_node.data
